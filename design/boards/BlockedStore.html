@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+</head>
+<body>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070;
+      --green: #9ab37a; --blue: #8fb8dd; --red: #e2705a;
+      --radius: 12px;
+      --fs: 14px; --fs-head: 16px; --fs-price: 24px;
+      --ui: "Poppins", Arial, Helvetica, sans-serif;
+      --prose: "Lora", Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    button.quiet { background: transparent; border-color: transparent; color: var(--muted); padding: 5px 9px; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+
+    .top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .brand { font-weight: 600; font-size: var(--fs-head); display: flex; align-items: center; gap: 9px; white-space: nowrap; letter-spacing: -0.01em; }
+    .brand .logo { flex: none; color: var(--accent); }
+    .status { color: var(--accent-bright); flex: 1; }
+    .actions { display: flex; gap: 8px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 18px 20px 40px; }
+    .addbar { display: flex; gap: 10px; margin-bottom: 18px; }
+    .addbar button { white-space: nowrap; padding: 0 20px; }
+
+    .errors { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .errors .chip { background: #2e1f1a; border: 1px solid #5c3a2e; color: #e8a894; border-radius: 6px; padding: 7px 12px; font-family: var(--prose); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; }
+    .card.paused { opacity: .55; }
+    .card .head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; gap: 12px; }
+    .card .head .name { font-weight: 600; font-size: var(--fs-head); letter-spacing: -0.01em; }
+    .card .head .sub { color: var(--muted); margin-top: 3px; font-family: var(--prose); }
+    .card .best { margin-left: auto; text-align: right; white-space: nowrap; }
+    .card .best .p { font-size: var(--fs-price); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: #e89070; }
+    .card .best .p.none { color: var(--faint); font-size: var(--fs-head); }
+    .card .best .s { color: var(--muted); }
+    .card .tools { display: flex; gap: 4px; padding: 8px 10px 0; justify-content: flex-end; }
+    .rows { padding: 8px 10px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .lrow { display: grid; grid-template-columns: 128px 150px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 7px 10px; border-radius: 8px; border: 1px solid transparent; }
+    .lrow.best { border-color: rgba(217,119,87,.5); background: rgba(217,119,87,.10); }
+    .src { font-weight: 500; padding: 3px 8px; border-radius: 6px; background: var(--panel2); border: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+    .src.amazon { color: #e0a468; } .src.ebay { color: #8fb8dd; } .src.facebook { color: #8fa8dd; }
+    .lrow .pr { font-weight: 600; white-space: nowrap; }
+    .lrow .ttl { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lrow .meta { color: var(--muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--prose); }
+    .tag { border-radius: 5px; padding: 1px 7px; margin-left: 8px; border: 1px solid var(--line); color: var(--muted); }
+    .tag.low { color: var(--green); border-color: rgba(154,179,122,.45); }
+    .nothing { padding: 44px 20px; color: var(--muted); text-align: center; font-family: var(--prose); line-height: 1.6; }
+    .more { padding: 4px 12px 12px; display: flex; gap: 10px; }
+  </style>
+
+
+<div style="background: #141413; min-height: 1000px">
+
+  <div class="top">
+    <div class="brand">
+      <svg class="logo" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="10" cy="10" r="2" fill="currentColor"></circle><path d="M10 1v4M10 15v4M1 10h4M15 10h4" stroke="currentColor" stroke-width="2"></path></svg>
+      Item Hunter
+    </div>
+    <div class="status">Checking RTX 5090 at Newegg.ca (waiting 9 s so the store is not hammered)</div>
+    <div class="actions">
+      <button class="primary">Check all now</button>
+      <button class="ghost">Settings</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="addbar">
+      <input value="" placeholder="Part to hunt, for example 9950X3D, RTX 5080, 9800X3D">
+      <button class="primary">Hunt it</button>
+    </div>
+
+    <div class="errors">
+      <span class="chip">Canada Computers: blocked (Access denied). Leaving this store alone until 16:53</span>
+      <span class="chip">eBay.ca: blocked (page title: "Error Page | eBay"). Leaving this store alone until 16:53</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">RTX 5090</div>
+            <div class="sub">"RTX 5090" · 11 listings · checked just now · target $7,100.00</div>
+          </div>
+          <div class="best">
+            <div class="p">$7,200.00</div>
+            <div class="s">Facebook Marketplace · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$7,200.00</span>
+            <span class="ttl">Brand new in box Zotac RTX 5090<span class="tag low">best</span><span class="meta">Used / local · Vancouver, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$7,488.02</span>
+            <span class="ttl">GIGABYTE AORUS GeForce RTX 5090 Master 32G<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$7,989.97</span>
+            <span class="ttl">GIGABYTE AORUS RTX 5090 AI Box Graphics Card<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (11)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">RTX 5070 Ti</div>
+            <div class="sub">"RTX 5070Ti" · 0 listings · checked just now</div>
+          </div>
+          <div class="best">
+            <div class="p none">No price</div>
+            <div class="s">no in-stock match yet</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="nothing">No in-stock listing matches yet.<br>Loosen the filters under Edit if that seems wrong.</div>
+      </div>
+
+      <div class="card paused">
+        <div class="head">
+          <div>
+            <div class="name">9800X3D</div>
+            <div class="sub">"9800x3d" · 8 listings · checked 2 h ago · paused</div>
+          </div>
+          <div class="best">
+            <div class="p">$550.00</div>
+            <div class="s">Facebook Marketplace · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Resume</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$550.00</span>
+            <span class="ttl">Ryzen 7 9800X3D<span class="tag low">best</span><span class="meta">Used / local · Nanaimo, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$569.98</span>
+            <span class="ttl">AMD Ryzen 7 9800X3D 8-Core, 16-Thread<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src ebay">eBay.ca</span>
+            <span class="pr">$589.00</span>
+            <span class="ttl">AMD Ryzen 7 9800X3D Desktop Processor<span class="meta">Brand New · United States</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (8)</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><a href="/">Item Hunter</a></div>
+  <div class="status">Privacy</div>
+</header>
+<main class="page">
+  <h1>Privacy</h1>
+  <p>Item Hunter runs entirely on your own computer. There is no account, no server of ours, no analytics and no tracking.</p>
+  <h2>What is stored</h2>
+  <p>The parts you add, the listings found for them, their price history, the alert feed and your settings. All of it lives in one file, <code>data/state.json</code>, inside the Item Hunter folder. Delete the folder and everything is gone.</p>
+  <h2>What leaves your computer</h2>
+  <p>To check prices, the app opens each store's search page in a hidden browser window, exactly like you would in a normal browser. Those stores see your IP address and the search term, and they set cookies in that hidden browser. The app keeps those store cookies in the <code>data/browser_state</code> files, one per checker, so the stores see the same returning visitor between restarts; delete those files to start fresh. Nothing else is sent anywhere. Turn a store off in Settings and it is never contacted.</p>
+  <h2>Notifications</h2>
+  <p>Windows notifications are produced locally through PowerShell. Optional browser alerts use your browser's own notification permission. Neither involves an outside service.</p>
+  <h2>Optional phone alerts</h2>
+  <p>Both are off until you turn them on in Settings. Email: the app connects to the SMTP server you enter and sends a message containing the part name, the price, the store name and a link to the listing. The SMTP password you enter is stored in plain text in <code>data/state.json</code> on this PC and is never shown again in the browser. Phone push: the same message is posted to the ntfy server you choose (ntfy.sh by default) under your topic name, and the ntfy app on your phone reads it from there. Topics on the public ntfy.sh server are not private, so anyone who guesses the name could read the alerts; the app can generate a random one for you.</p>
+  <p class="hint">Last updated 7 September 2026.</p>
+</main>
+</body>
+</html>

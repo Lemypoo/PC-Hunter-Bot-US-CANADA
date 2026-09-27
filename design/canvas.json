@@ -1,0 +1,70 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 1400,
+      "title": "Dashboard"
+    },
+    {
+      "file": "EditItem.dc.html",
+      "x": 1560,
+      "y": 0,
+      "w": 860,
+      "h": 970,
+      "title": "Edit item dialog"
+    },
+    {
+      "file": "Settings.dc.html",
+      "x": 2520,
+      "y": 0,
+      "w": 860,
+      "h": 1440,
+      "title": "Settings dialog"
+    },
+    {
+      "file": "EmptyState.dc.html",
+      "x": 0,
+      "y": 1580,
+      "w": 1440,
+      "h": 640,
+      "title": "Empty state"
+    },
+    {
+      "file": "BlockedStore.dc.html",
+      "x": 1560,
+      "y": 1580,
+      "w": 1440,
+      "h": 1000,
+      "title": "Blocked store and no-match states"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "palette",
+      "x": 0,
+      "y": -210,
+      "w": 600,
+      "text": "Dark palette.\nInk #141413 ground, panels #1d1d1b, text #faf9f5, clay #d97757 on primary actions with #e89070 on the hero prices, olive #9ab37a for drops. Poppins for the interface, Lora for prose."
+    },
+    {
+      "id": "type",
+      "x": 660,
+      "y": -210,
+      "w": 520,
+      "text": "One type scale: 14px for everything, 16px for names and headings, 24px for the one price that matters. The uniform body size is why the cards are two across instead of three."
+    },
+    {
+      "id": "states",
+      "x": 0,
+      "y": 1430,
+      "w": 600,
+      "text": "States row: nothing tracked yet, and a pass where two stores blocked the scraper while one item found no in-stock match and another sits paused."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

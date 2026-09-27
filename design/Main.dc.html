@@ -1,0 +1,384 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap">
+  <style>
+    :root {
+      /* Dark palette. Swap this block for the light one to flip the theme. */
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070;
+      --green: #9ab37a; --blue: #8fb8dd; --red: #e2705a;
+      --radius: 12px;
+      /* One type scale: body, heading, and the single hero number. Nothing else. */
+      --fs: 14px; --fs-head: 16px; --fs-price: 24px;
+      --ui: "Poppins", Arial, Helvetica, sans-serif;
+      --prose: "Lora", Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    button.quiet { background: transparent; border-color: transparent; color: var(--muted); padding: 5px 9px; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    h2 { font-size: var(--fs-head); margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+
+    .top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .brand { font-weight: 600; font-size: var(--fs-head); display: flex; align-items: center; gap: 9px; white-space: nowrap; letter-spacing: -0.01em; }
+    .brand .logo { flex: none; }
+    .status { color: var(--muted); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .actions { display: flex; gap: 8px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 18px 20px 40px; }
+    .addbar { display: flex; gap: 10px; margin-bottom: 18px; }
+    .addbar button { white-space: nowrap; padding: 0 20px; }
+
+    .sectionhead { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; }
+    .feedwrap { margin-bottom: 20px; }
+    .feed { display: flex; gap: 12px; }
+    .ev { flex: 0 0 332px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: block; }
+    .ev .l1 { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+    .badge { font-weight: 500; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+    .badge.drop { background: rgba(154,179,122,.16); color: var(--green); }
+    .badge.new { background: rgba(143,184,221,.16); color: var(--blue); }
+    .ev .price { font-weight: 600; margin-left: auto; white-space: nowrap; }
+    .ev .t { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev .item { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev .when { color: var(--faint); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; }
+    .card .head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; gap: 12px; }
+    .card .head .name { font-weight: 600; font-size: var(--fs-head); letter-spacing: -0.01em; }
+    .card .head .sub { color: var(--muted); margin-top: 3px; font-family: var(--prose); }
+    .card .best { margin-left: auto; text-align: right; white-space: nowrap; }
+    .card .best .p { font-size: var(--fs-price); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+    .card .best .s { color: var(--muted); }
+    .card .tools { display: flex; gap: 4px; padding: 8px 10px 0; justify-content: flex-end; }
+    .rows { padding: 8px 10px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .lrow { display: grid; grid-template-columns: 128px 150px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 7px 10px; border-radius: 8px; border: 1px solid transparent; }
+    .lrow.best { border-color: rgba(217,119,87,.5); background: rgba(217,119,87,.10); }
+    .lrow.dropped { background: rgba(154,179,122,.10); border-color: rgba(154,179,122,.35); }
+    .src { font-weight: 500; padding: 3px 8px; border-radius: 6px; background: var(--panel2); border: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+    .src.amazon { color: #e0a468; } .src.newegg { color: #e08a6d; } .src.ebay { color: #8fb8dd; }
+    .src.bestbuy_ca { color: #d6c07a; } .src.canadacomputers { color: #dd8ba0; } .src.facebook { color: #8fa8dd; }
+    .lrow .pr { font-weight: 600; white-space: nowrap; }
+    .lrow .pr small { display: block; font-weight: 400; font-size: inherit; color: var(--muted); }
+    .lrow .pr .down { color: var(--green); } .lrow .pr .up { color: var(--red); }
+    .lrow .ttl { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lrow .meta { color: var(--muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--prose); }
+    .tag { border-radius: 5px; padding: 1px 7px; margin-left: 8px; border: 1px solid var(--line); color: var(--muted); }
+    .tag.low { color: var(--green); border-color: rgba(154,179,122,.45); }
+    .tag.used { color: var(--blue); border-color: rgba(143,184,221,.45); }
+    .more { padding: 4px 12px 12px; display: flex; gap: 10px; }
+    .foot { max-width: 1400px; margin: 0 auto; padding: 0 20px 28px; color: var(--muted); display: flex; gap: 18px; font-family: var(--prose); }
+    .foot a { text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="background: #141413; min-height: 1400px">
+
+  <div class="top">
+    <div class="brand">
+      <svg class="logo" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="color: {{accent}}"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"></circle><circle cx="10" cy="10" r="2" fill="currentColor"></circle><path d="M10 1v4M10 15v4M1 10h4M15 10h4" stroke="currentColor" stroke-width="2"></path></svg>
+      Item Hunter
+    </div>
+    <div class="status">Last check 2 min ago · next in 13 min · every 15 min · via msedge</div>
+    <div class="actions">
+      <button class="primary" style="background: {{accent}}; border-color: {{accent}}">Check all now</button>
+      <button class="ghost">Settings</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="addbar">
+      <input value="" placeholder="Part to hunt, for example 9950X3D, RTX 5080, 9800X3D">
+      <button class="primary" style="background: {{accent}}; border-color: {{accent}}">Hunt it</button>
+    </div>
+
+    <div class="feedwrap">
+      <div class="sectionhead">
+        <h2>Price drops and new listings</h2>
+        <button class="ghost">Clear</button>
+      </div>
+      <div class="feed">
+        <a class="ev">
+          <div class="l1"><span class="badge drop">Down $19.99</span><span class="item">9950X3D</span><span class="price" style="color: {{priceColor}}">$929.98</span></div>
+          <div class="t">Amazon.ca · AMD Ryzen 9 9950X3D 16-Core</div>
+          <div class="when">2 min ago · was $949.99</div>
+        </a>
+        <a class="ev">
+          <div class="l1"><span class="badge new">New</span><span class="item">RTX 5090</span><span class="price" style="color: {{priceColor}}">$7,200.00</span></div>
+          <div class="t">Facebook Marketplace · Zotac RTX 5090</div>
+          <div class="when">14 min ago · Vancouver, BC</div>
+        </a>
+        <a class="ev">
+          <div class="l1"><span class="badge new">Back in stock</span><span class="item">9800X3D</span><span class="price" style="color: {{priceColor}}">$569.98</span></div>
+          <div class="t">Amazon.ca · AMD Ryzen 7 9800X3D 8-Core</div>
+          <div class="when">38 min ago</div>
+        </a>
+        <a class="ev">
+          <div class="l1"><span class="badge drop">Down $101.51</span><span class="item">9950X3D</span><span class="price" style="color: {{priceColor}}">$801.78</span></div>
+          <div class="t">Amazon.ca · Used, Amazon Resale</div>
+          <div class="when">1 h ago · was $903.29</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">RTX 5090</div>
+            <div class="sub">"RTX 5090" · 19 listings · checked 2 min ago · target $7,100.00</div>
+          </div>
+          <div class="best">
+            <div class="p" style="color: {{priceColor}}">$7,200.00</div>
+            <div class="s">Facebook Marketplace · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$7,200.00</span>
+            <span class="ttl">Brand new in box Zotac RTX 5090<span class="tag low">best</span><span class="meta">Used / local · Vancouver, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$7,300.00</span>
+            <span class="ttl">ASUS 5090 RTX GPU<span class="meta">Used / local · West Vancouver, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$7,488.02</span>
+            <span class="ttl">GIGABYTE AORUS GeForce RTX 5090 Master 32G<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src canadacomputers">Canada Comp.</span>
+            <span class="pr">$7,899.00<small>list $8,199.00</small></span>
+            <span class="ttl">GIGABYTE GeForce RTX 5090 WINDFORCE OC<span class="meta">New · Online · Available to Ship</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$8,789.22<small class="up">up from $8,370.69</small></span>
+            <span class="ttl">ASUS TUF Gaming GeForce RTX 5090 32GB<span class="tag used">used</span><span class="meta">Used or new, cheapest of 2 offers</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (19)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">9950X3D</div>
+            <div class="sub">"9950X3D" · 61 listings · checked 2 min ago</div>
+          </div>
+          <div class="best">
+            <div class="p" style="color: {{priceColor}}">$800.00</div>
+            <div class="s">eBay.ca · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src ebay">eBay.ca</span>
+            <span class="pr">$800.00</span>
+            <span class="ttl">AMD Ryzen 9 9950X3D Granite Ridge<span class="tag low">best</span><span class="meta">Brand New · Free local pickup</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$801.78</span>
+            <span class="ttl">AMD Ryzen 9 9950X3D 16-Core Processor<span class="tag used">used</span><span class="meta">Used, Amazon Resale</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src canadacomputers">Canada Comp.</span>
+            <span class="pr">$883.48<small>list $949.05</small></span>
+            <span class="ttl">AMD Ryzen 9 9950X3D 16-Core/32Thread CPU<span class="meta">Open Box · Available for Pickup</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow dropped">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$929.98<small class="down">down from $949.99</small></span>
+            <span class="ttl">AMD Ryzen 9 9950X3D 16-Core Processor<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src bestbuy_ca">Best Buy</span>
+            <span class="pr">$929.98<small>list $959.98</small></span>
+            <span class="ttl">AMD Ryzen 9 9950X3D 16-Core AM5 Processor<span class="meta">New · Best Buy</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (61)</button>
+          <button class="ghost">Show hidden (2)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">9800X3D</div>
+            <div class="sub">"9800x3d" · 8 listings · checked 3 min ago · target $520.00</div>
+          </div>
+          <div class="best">
+            <div class="p" style="color: {{priceColor}}">$550.00</div>
+            <div class="s">Facebook Marketplace · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$550.00</span>
+            <span class="ttl">Ryzen 7 9800X3D<span class="tag low">best</span><span class="meta">Used / local · Nanaimo, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$560.00</span>
+            <span class="ttl">AMD Ryzen 7 9800X3D 8-Core, brand new<span class="meta">Used / local · Coquitlam, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$569.98<small>list $619.98</small></span>
+            <span class="ttl">AMD Ryzen 7 9800X3D 8-Core, 16-Thread<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src ebay">eBay.ca</span>
+            <span class="pr">$589.00</span>
+            <span class="ttl">AMD Ryzen 7 9800X3D Desktop Processor<span class="meta">Brand New · United States</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src bestbuy_ca">Best Buy</span>
+            <span class="pr">$599.99</span>
+            <span class="ttl">AMD Ryzen 7 9800X3D 8-Core AM5 Processor<span class="meta">New · Best Buy</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (8)</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="head">
+          <div>
+            <div class="name">RTX 5080</div>
+            <div class="sub">"RTX 5080" · 30 listings · checked 4 min ago</div>
+          </div>
+          <div class="best">
+            <div class="p" style="color: {{priceColor}}">$1,849.99</div>
+            <div class="s">Newegg.ca · CAD</div>
+          </div>
+        </div>
+        <div class="tools">
+          <button class="quiet">Check now</button>
+          <button class="quiet">Edit</button>
+          <button class="quiet">Pause</button>
+          <button class="quiet">Remove</button>
+        </div>
+        <div class="rows">
+          <div class="lrow best">
+            <span class="src newegg">Newegg.ca</span>
+            <span class="pr">$1,849.99<small class="down">down from $1,949.99</small></span>
+            <span class="ttl">MSI GeForce RTX 5080 16G Ventus 3X OC<span class="tag low">best</span><span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src amazon">Amazon.ca</span>
+            <span class="pr">$1,899.97</span>
+            <span class="ttl">GIGABYTE GeForce RTX 5080 Gaming OC 16G<span class="meta">New</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src bestbuy_ca">Best Buy</span>
+            <span class="pr">$1,929.99</span>
+            <span class="ttl">ASUS PRIME GeForce RTX 5080 16GB<span class="meta">New · Best Buy</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src facebook">Facebook</span>
+            <span class="pr">$1,950.00</span>
+            <span class="ttl">RTX 5080 Founders, barely used<span class="meta">Used / local · Burnaby, BC</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+          <div class="lrow">
+            <span class="src ebay">eBay.ca</span>
+            <span class="pr">$2,014.50</span>
+            <span class="ttl">ZOTAC GAMING GeForce RTX 5080 Solid OC<span class="meta">Brand New · United States</span></span>
+            <button class="quiet">Hide</button>
+          </div>
+        </div>
+        <div class="more">
+          <button class="ghost">Show all (30)</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="foot">
+    <span>Runs on this computer. Only in-stock listings are shown.</span>
+    <a>Privacy</a>
+    <a>Terms</a>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{
+  "accent": {"editor": "color", "default": "#d97757", "section": "Palette", "options": ["#d97757", "#8fb8dd", "#9ab37a", "#faf9f5"]},
+  "priceColor": {"editor": "color", "default": "#e89070", "section": "Palette", "options": ["#e89070", "#d97757", "#faf9f5", "#9ab37a"]},
+  "$preview": {"width": 1440, "height": 1400}
+}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#d97757',
+      priceColor: this.props.priceColor ?? '#e89070',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070; --green: #9ab37a;
+      --fs: 14px; --fs-head: 16px;
+      --ui: "Poppins", Arial, Helvetica, sans-serif;
+      --prose: "Lora", Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    input, select { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    label { display: block; color: var(--muted); margin: 12px 0; }
+    label input, label select { margin-top: 5px; }
+    label.inline { display: flex; align-items: center; gap: 9px; color: var(--text); margin: 0; }
+    label.inline input { width: auto; margin: 0; accent-color: #d97757; }
+    label.inline.channel { margin-top: 18px; font-weight: 600; }
+    h3 { margin: 0 0 14px; font-size: var(--fs-head); font-weight: 600; letter-spacing: -0.01em; }
+    fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 14px 0 0; padding: 12px 14px; }
+    legend { color: var(--muted); padding: 0 6px; }
+    .toggles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+    .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .hint { color: var(--muted); margin: 8px 0 0; font-family: var(--prose); line-height: 1.55; }
+    .quick { display: flex; gap: 8px; margin: 12px 0 0; }
+    .teststatus { margin: 12px 0 0; font-family: var(--prose); }
+    .teststatus.good { color: var(--green); }
+    .dlgactions { display: flex; gap: 8px; margin-top: 18px; align-items: center; }
+    .dlgactions .spacer { flex: 1; }
+    .log { margin-top: 18px; color: var(--muted); }
+    .dlg { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; width: 760px; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .backdrop { background: rgba(0,0,0,.55); padding: 50px; display: flex; justify-content: center; }
+  </style>
+</helmet>
+
+<div style="background: #141413">
+  <div class="backdrop">
+    <div class="dlg">
+      <h3>Settings</h3>
+
+      <div class="row3">
+        <label>Region
+          <select><option>Canada</option></select>
+        </label>
+        <label>Check every (minutes)
+          <input value="15">
+        </label>
+        <label>Facebook city slug
+          <input value="vancouver">
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Stores</legend>
+        <div class="toggles">
+          <label class="inline"><input type="checkbox" checked> Amazon.ca</label>
+          <label class="inline"><input type="checkbox" checked> Newegg.ca</label>
+          <label class="inline"><input type="checkbox" checked> Best Buy Canada</label>
+          <label class="inline"><input type="checkbox" checked> Canada Computers</label>
+          <label class="inline"><input type="checkbox" checked> eBay.ca</label>
+          <label class="inline"><input type="checkbox" checked> Facebook Marketplace</label>
+        </div>
+        <div class="quick">
+          <button class="ghost">Amazon only</button>
+          <button class="ghost">All stores</button>
+        </div>
+        <label class="inline channel"><input type="checkbox" checked> Include used and open-box offers</label>
+        <p class="hint">Amazon also sells used and open-box stock through Amazon Resale, often well under the new price. The cheapest such offer for a product appears as its own row, marked "used".</p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Alerts</legend>
+        <p class="hint" style="margin: 0 0 6px">An alert goes out when a listing beats an item's best price, drops to within 5% of it, or reaches the item's target price. At most three per store per check, on every channel below.</p>
+
+        <label class="inline channel"><input type="checkbox" checked> Windows notifications on this PC</label>
+        <div class="quick">
+          <button class="ghost">Test Windows notification</button>
+          <button class="ghost">Enable browser alerts</button>
+        </div>
+
+        <label class="inline channel"><input type="checkbox"> Email</label>
+        <div class="row3">
+          <label>Send to
+            <input value="" placeholder="you@example.com">
+          </label>
+          <label>SMTP host
+            <input value="smtp.gmail.com">
+          </label>
+          <label>Port
+            <input value="587">
+          </label>
+        </div>
+        <div class="row3">
+          <label>SMTP username
+            <input value="" placeholder="you@gmail.com">
+          </label>
+          <label>SMTP password
+            <input value="">
+          </label>
+          <label>Security
+            <select><option>STARTTLS (port 587)</option></select>
+          </label>
+        </div>
+        <p class="hint">Sending email needs an account to send from. For Gmail the password must be a 16-character app password, not your normal password.</p>
+        <div class="quick"><button class="ghost">Send test email</button></div>
+
+        <label class="inline channel"><input type="checkbox" checked> Phone push through the ntfy app</label>
+        <div class="row3">
+          <label>Topic
+            <input value="item-hunter-x7k2p9">
+          </label>
+          <label>Server
+            <input value="https://ntfy.sh">
+          </label>
+          <label>&nbsp;
+            <span class="quick" style="margin-top: 5px"><button class="ghost">Generate topic</button></span>
+          </label>
+        </div>
+        <p class="hint">Install the free ntfy app, subscribe to the same topic, and alerts arrive as push notifications. Anyone who knows the topic name can read it, so use a random one.</p>
+        <div class="quick"><button class="ghost">Send test push</button></div>
+        <div class="teststatus good">Sent to topic item-hunter-x7k2p9. It should be on your phone now; then press Save.</div>
+      </fieldset>
+
+      <div class="dlgactions">
+        <span class="spacer"></span>
+        <button class="ghost">Cancel</button>
+        <button class="primary">Save</button>
+      </div>
+
+      <div class="log">Activity log</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"$preview": {"width": 860, "height": 1440}}'>
+class Component extends DCLogic {}
+</script>
+</body>
+</html>

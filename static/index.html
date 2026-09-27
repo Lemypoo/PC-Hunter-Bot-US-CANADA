@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Item Hunter</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg class="logo" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="10" r="2" fill="currentColor"/><path d="M10 1v4M10 15v4M1 10h4M15 10h4" stroke="currentColor" stroke-width="2"/></svg>
+    Item Hunter
+  </div>
+  <div class="status" id="status">Starting</div>
+  <div class="actions">
+    <button id="checkAll" class="primary">Check all now</button>
+    <button id="openSettings" class="ghost">Settings</button>
+  </div>
+</header>
+
+<main>
+  <form id="addForm" class="addbar" autocomplete="off">
+    <input id="addQuery" placeholder="Part to hunt, for example 9950X3D, RTX 5080, 9800X3D" maxlength="80">
+    <button type="submit" class="primary">Hunt it</button>
+  </form>
+
+  <div id="otherEdition" class="notice" hidden></div>
+  <div id="errors" class="errors" hidden></div>
+
+  <section class="feedwrap" id="feedwrap" hidden>
+    <div class="sectionhead">
+      <h2>Price drops and new listings</h2>
+      <button id="clearFeed" class="ghost small">Clear</button>
+    </div>
+    <div id="feed" class="feed"></div>
+  </section>
+
+  <section id="items" class="grid"></section>
+  <div id="empty" class="empty" hidden>
+    <div class="big">Nothing being hunted yet.</div>
+    <div>Type a part above. Each one gets a card here with the cheapest in-stock listing from every store, and drops land in the feed.</div>
+  </div>
+</main>
+
+<footer class="foot">
+  <span>Runs on this computer. Only in-stock listings are shown.</span>
+  <a href="/privacy">Privacy</a>
+  <a href="/terms">Terms</a>
+</footer>
+
+<dialog id="editDlg">
+  <form method="dialog" id="editForm">
+    <h3>Edit item</h3>
+    <label>Name <input name="name"></label>
+    <label>Search query <input name="query" required></label>
+    <label>Must contain (comma separated) <input name="must" placeholder="9950x3d"></label>
+    <label>Exclude (comma separated) <input name="exclude" placeholder="gaming pc, bundle"></label>
+    <div class="row3">
+      <label>Min price <input name="min_price" type="number" step="0.01" min="0"></label>
+      <label>Max price <input name="max_price" type="number" step="0.01" min="0"></label>
+      <label>Target price <input name="target_price" type="number" step="0.01" min="0"></label>
+    </div>
+    <p class="hint">Target price: always notify when any listing is at or below it. Max price: ignore listings above it (kills prebuilts).</p>
+    <fieldset>
+      <legend>Stores to check for this item</legend>
+      <p class="hint">Settings decides which stores the app uses at all; this list only narrows it for this item. A store must be on in both places to be checked.</p>
+      <div id="itemSources" class="toggles"></div>
+      <div class="quick">
+        <button type="button" class="ghost small" id="itemAmazonOnly">Amazon only</button>
+        <button type="button" class="ghost small" id="itemAllStores">All stores</button>
+      </div>
+    </fieldset>
+    <div class="dlgactions">
+      <span class="spacer"></span>
+      <button type="button" class="ghost" data-close>Cancel</button>
+      <button type="submit" class="primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="settingsDlg">
+  <form method="dialog" id="settingsForm">
+    <h3>Settings</h3>
+    <div class="row3">
+      <label>Country
+        <select name="region"><option value="CA">Canada</option><option value="US">United States</option></select>
+      </label>
+      <label>Checking speed
+        <select name="speed"><option value="fast">Fast</option><option value="normal">Normal</option><option value="relaxed">Relaxed</option></select>
+      </label>
+      <label>Facebook city <input name="fb_city" placeholder="vancouver"></label>
+    </div>
+    <p class="hint">Facebook city: open Facebook Marketplace in your own browser, pick your city, and copy the word after /marketplace/ in the address bar, for example vancouver, toronto or nyc. Somewhere other than Canada or the US? Use <a href="https://github.com/Lemypoo/PC-Hunter-Bot-International" target="_blank" rel="noopener">Item Hunter International</a>.</p>
+
+    <fieldset>
+      <legend>Stores</legend>
+      <div id="sourceToggles" class="toggles"></div>
+      <p class="hint">Each store is checked on its own clock, shown beside it, and several are checked at once. Speed scales all of them. Stores that refuse fast visitors, Amazon and Canada Computers above all, stay slow on purpose.</p>
+      <div class="quick">
+        <button type="button" class="ghost small" id="storesAmazonOnly">Amazon only</button>
+        <button type="button" class="ghost small" id="storesAll">All stores</button>
+      </div>
+      <label>Stores checked at the same time <input name="workers" type="number" min="1" max="4"></label>
+      <label class="inline channel"><input type="checkbox" name="include_used"> Include used and open-box offers</label>
+      <p class="hint">Amazon also sells used and open-box stock through Amazon Resale, often well under the new price. With this on, the cheapest such offer for a product appears as its own row, marked "Used". Turn it off to watch new-in-box prices only.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Alerts</legend>
+      <p class="hint">An alert goes out when a listing beats an item's best price, drops to within 5% of it, or reaches the item's target price. At most three per store per check, on every channel below.</p>
+      <label class="inline"><input type="checkbox" name="notify"> Windows notifications on this PC</label>
+      <div class="quick">
+        <button type="button" class="ghost small" id="testNotify">Test Windows notification</button>
+        <button type="button" class="ghost small" id="browserAlerts">Enable browser alerts</button>
+      </div>
+
+      <label class="inline channel"><input type="checkbox" name="email_enabled"> Email</label>
+      <div class="row3">
+        <label>Send to <input name="email_to" type="email" placeholder="you@example.com"></label>
+        <label>SMTP host <input name="email_smtp_host" placeholder="smtp.gmail.com"></label>
+        <label>Port <input name="email_smtp_port" type="number" min="1" max="65535"></label>
+      </div>
+      <div class="row3">
+        <label>SMTP username <input name="email_username" placeholder="you@gmail.com"></label>
+        <label>SMTP password <input name="email_password" type="password" autocomplete="new-password"></label>
+        <label>Security
+          <select name="email_security"><option value="starttls">STARTTLS (port 587)</option><option value="ssl">SSL (port 465)</option><option value="none">None</option></select>
+        </label>
+      </div>
+      <p class="hint">Sending email needs an account to send from. For Gmail: host smtp.gmail.com, port 587, username is your full address, and the password must be a 16-character app password (Google account, Security, 2-Step Verification, App passwords). Outlook: smtp.office365.com, port 587, also with an app password. The password is kept in data/state.json on this PC.</p>
+      <div class="quick"><button type="button" class="ghost small" id="testEmail">Send test email</button></div>
+      <div class="teststatus" id="emailStatus" hidden></div>
+
+      <label class="inline channel"><input type="checkbox" name="push_enabled"> Phone push through the ntfy app</label>
+      <div class="row3">
+        <label>Topic <input name="push_topic" placeholder="item-hunter-x7k2p9"></label>
+        <label>Server <input name="push_server" placeholder="https://ntfy.sh"></label>
+        <label>&nbsp;<span class="quick"><button type="button" class="ghost small" id="genTopic">Generate topic</button></span></label>
+      </div>
+      <p class="hint">Install the free ntfy app (Android or iPhone), subscribe to the same topic, and alerts arrive as push notifications. Anyone who knows the topic name can read it, so use a random one.</p>
+      <div class="quick"><button type="button" class="ghost small" id="testPush">Send test push</button></div>
+      <div class="teststatus" id="pushStatus" hidden></div>
+    </fieldset>
+
+    <div class="dlgactions">
+      <span class="spacer"></span>
+      <button type="button" class="ghost" data-close>Cancel</button>
+      <button type="submit" class="primary">Save</button>
+    </div>
+    <details class="log"><summary>Activity log</summary><pre id="log"></pre></details>
+  </form>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

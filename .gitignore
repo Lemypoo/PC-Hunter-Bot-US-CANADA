@@ -1,0 +1,14 @@
+# Personal data: saved settings (including the SMTP password), price history and store cookies
+data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

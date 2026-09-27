@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+</head>
+<body>
+
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070; --green: #9ab37a;
+      --fs: 14px; --fs-head: 16px;
+      --ui: "Poppins", Arial, Helvetica, sans-serif;
+      --prose: "Lora", Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    label { display: block; color: var(--muted); margin: 12px 0; }
+    label input { margin-top: 5px; }
+    label.inline { display: flex; align-items: center; gap: 9px; color: var(--text); margin: 0; }
+    label.inline input { width: auto; margin: 0; accent-color: #d97757; }
+    label.inline.off { color: var(--faint); }
+    h3 { margin: 0 0 14px; font-size: var(--fs-head); font-weight: 600; letter-spacing: -0.01em; }
+    fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 14px 0 0; padding: 12px 14px; }
+    legend { color: var(--muted); padding: 0 6px; }
+    .toggles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+    .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .hint { color: var(--muted); margin: 8px 0 0; font-family: var(--prose); line-height: 1.55; }
+    .quick { display: flex; gap: 8px; margin: 12px 0 0; }
+    .dlgactions { display: flex; gap: 8px; margin-top: 18px; align-items: center; }
+    .dlgactions .spacer { flex: 1; }
+    .dlg { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; width: 760px; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .backdrop { background: rgba(0,0,0,.55); padding: 56px 50px; display: flex; justify-content: center; }
+  </style>
+
+
+<div style="background: #141413">
+  <div class="backdrop">
+    <div class="dlg">
+      <h3>Edit item</h3>
+
+      <label>Name
+        <input value="RTX 5090">
+      </label>
+      <label>Search query
+        <input value="RTX 5090">
+      </label>
+      <label>Must contain (comma separated)
+        <input value="rtx, 5090">
+      </label>
+      <label>Exclude (comma separated)
+        <input value="gaming pc, laptop, prebuilt, bundle, combo, no gpu, water block">
+      </label>
+
+      <div class="row3">
+        <label>Min price
+          <input value="">
+        </label>
+        <label>Max price
+          <input value="">
+        </label>
+        <label>Target price
+          <input value="7100">
+        </label>
+      </div>
+      <p class="hint">Target price: always notify when any listing is at or below it. Max price: ignore listings above it, which kills prebuilts.</p>
+
+      <fieldset>
+        <legend>Stores to check for this item</legend>
+        <p class="hint" style="margin: 0 0 14px">Settings decides which stores the app uses at all; this list only narrows it for this item. A store must be on in both places to be checked.</p>
+        <div class="toggles">
+          <label class="inline"><input type="checkbox" checked> Amazon.ca</label>
+          <label class="inline"><input type="checkbox" checked> Newegg.ca</label>
+          <label class="inline"><input type="checkbox" checked> Best Buy Canada</label>
+          <label class="inline off"><input type="checkbox"> Canada Computers, off in Settings</label>
+          <label class="inline"><input type="checkbox" checked> eBay.ca</label>
+          <label class="inline"><input type="checkbox" checked> Facebook Marketplace</label>
+        </div>
+        <div class="quick">
+          <button class="ghost">Amazon only</button>
+          <button class="ghost">All stores</button>
+        </div>
+      </fieldset>
+
+      <div class="dlgactions">
+        <span class="spacer"></span>
+        <button class="ghost">Cancel</button>
+        <button class="primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>

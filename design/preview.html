@@ -1,0 +1,953 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Item Hunter UI preview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap">
+<style>
+  body { margin: 0; background: #0c0c0b; color: #faf9f5;
+         font: 400 14px/1.5 "Poppins", Arial, sans-serif; padding: 40px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .lede { font-family: "Lora", Georgia, serif; color: #b0aea5; max-width: 760px; margin: 0 0 18px; }
+  .note { font-family: "Lora", Georgia, serif; color: #b0aea5; background: #1d1d1b;
+           border: 1px solid #33322e; border-radius: 8px; padding: 10px 14px;
+           max-width: 560px; margin: 0 0 10px; white-space: pre-line; font-size: 13px; }
+  .board { margin: 34px 0 0; }
+  .cap { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+  .name { font-weight: 600; font-size: 15px; }
+  .dim { color: #7c7a72; font-size: 12px; }
+  iframe { border: 1px solid #33322e; border-radius: 10px; background: #141413;
+            display: block; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+</style></head>
+<body>
+<h1>Item Hunter UI</h1>
+<p class="lede">Five artboards in a warm dark palette. This is a flat preview; the pan and zoom canvas needs Node.</p>
+<p class="note">Dark palette.
+Ink #141413 ground, panels #1d1d1b, text #faf9f5, clay #d97757 on primary actions with #e89070 on the hero prices, olive #9ab37a for drops. Poppins for the interface, Lora for prose.</p><p class="note">One type scale: 14px for everything, 16px for names and headings, 24px for the one price that matters. The uniform body size is why the cards are two across instead of three.</p><p class="note">States row: nothing tracked yet, and a pass where two stores blocked the scraper while one item found no in-stock match and another sits paused.</p>
+<section class="board"><div class="cap"><span class="name">Dashboard</span><span class="dim">1440 x 1400  ·  Main.dc.html</span></div><iframe style="width:1440px;height:1400px" srcdoc="&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap&quot;&gt;
+  &lt;style&gt;
+    :root {
+      /* Dark palette. Swap this block for the light one to flip the theme. */
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070;
+      --green: #9ab37a; --blue: #8fb8dd; --red: #e2705a;
+      --radius: 12px;
+      /* One type scale: body, heading, and the single hero number. Nothing else. */
+      --fs: 14px; --fs-head: 16px; --fs-price: 24px;
+      --ui: &quot;Poppins&quot;, Arial, Helvetica, sans-serif;
+      --prose: &quot;Lora&quot;, Georgia, &quot;Times New Roman&quot;, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    button.quiet { background: transparent; border-color: transparent; color: var(--muted); padding: 5px 9px; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    h2 { font-size: var(--fs-head); margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+
+    .top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .brand { font-weight: 600; font-size: var(--fs-head); display: flex; align-items: center; gap: 9px; white-space: nowrap; letter-spacing: -0.01em; }
+    .brand .logo { flex: none; }
+    .status { color: var(--muted); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .actions { display: flex; gap: 8px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 18px 20px 40px; }
+    .addbar { display: flex; gap: 10px; margin-bottom: 18px; }
+    .addbar button { white-space: nowrap; padding: 0 20px; }
+
+    .sectionhead { display: flex; align-items: center; justify-content: space-between; margin: 0 0 10px; }
+    .feedwrap { margin-bottom: 20px; }
+    .feed { display: flex; gap: 12px; }
+    .ev { flex: 0 0 332px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; display: block; }
+    .ev .l1 { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+    .badge { font-weight: 500; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+    .badge.drop { background: rgba(154,179,122,.16); color: var(--green); }
+    .badge.new { background: rgba(143,184,221,.16); color: var(--blue); }
+    .ev .price { font-weight: 600; margin-left: auto; white-space: nowrap; }
+    .ev .t { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev .item { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev .when { color: var(--faint); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; }
+    .card .head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; gap: 12px; }
+    .card .head .name { font-weight: 600; font-size: var(--fs-head); letter-spacing: -0.01em; }
+    .card .head .sub { color: var(--muted); margin-top: 3px; font-family: var(--prose); }
+    .card .best { margin-left: auto; text-align: right; white-space: nowrap; }
+    .card .best .p { font-size: var(--fs-price); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; }
+    .card .best .s { color: var(--muted); }
+    .card .tools { display: flex; gap: 4px; padding: 8px 10px 0; justify-content: flex-end; }
+    .rows { padding: 8px 10px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .lrow { display: grid; grid-template-columns: 128px 150px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 7px 10px; border-radius: 8px; border: 1px solid transparent; }
+    .lrow.best { border-color: rgba(217,119,87,.5); background: rgba(217,119,87,.10); }
+    .lrow.dropped { background: rgba(154,179,122,.10); border-color: rgba(154,179,122,.35); }
+    .src { font-weight: 500; padding: 3px 8px; border-radius: 6px; background: var(--panel2); border: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+    .src.amazon { color: #e0a468; } .src.newegg { color: #e08a6d; } .src.ebay { color: #8fb8dd; }
+    .src.bestbuy_ca { color: #d6c07a; } .src.canadacomputers { color: #dd8ba0; } .src.facebook { color: #8fa8dd; }
+    .lrow .pr { font-weight: 600; white-space: nowrap; }
+    .lrow .pr small { display: block; font-weight: 400; font-size: inherit; color: var(--muted); }
+    .lrow .pr .down { color: var(--green); } .lrow .pr .up { color: var(--red); }
+    .lrow .ttl { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lrow .meta { color: var(--muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--prose); }
+    .tag { border-radius: 5px; padding: 1px 7px; margin-left: 8px; border: 1px solid var(--line); color: var(--muted); }
+    .tag.low { color: var(--green); border-color: rgba(154,179,122,.45); }
+    .tag.used { color: var(--blue); border-color: rgba(143,184,221,.45); }
+    .more { padding: 4px 12px 12px; display: flex; gap: 10px; }
+    .foot { max-width: 1400px; margin: 0 auto; padding: 0 20px 28px; color: var(--muted); display: flex; gap: 18px; font-family: var(--prose); }
+    .foot a { text-decoration: underline; }
+  &lt;/style&gt;
+
+
+&lt;div style=&quot;background: #141413; min-height: 1400px&quot;&gt;
+
+  &lt;div class=&quot;top&quot;&gt;
+    &lt;div class=&quot;brand&quot;&gt;
+      &lt;svg class=&quot;logo&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot; style=&quot;color: #d97757&quot;&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;2&quot; fill=&quot;currentColor&quot;&gt;&lt;/circle&gt;&lt;path d=&quot;M10 1v4M10 15v4M1 10h4M15 10h4&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+      Item Hunter
+    &lt;/div&gt;
+    &lt;div class=&quot;status&quot;&gt;Last check 2 min ago · next in 13 min · every 15 min · via msedge&lt;/div&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;button class=&quot;primary&quot; style=&quot;background: #d97757; border-color: #d97757&quot;&gt;Check all now&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot;&gt;Settings&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;main&gt;
+    &lt;div class=&quot;addbar&quot;&gt;
+      &lt;input value=&quot;&quot; placeholder=&quot;Part to hunt, for example 9950X3D, RTX 5080, 9800X3D&quot;&gt;
+      &lt;button class=&quot;primary&quot; style=&quot;background: #d97757; border-color: #d97757&quot;&gt;Hunt it&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;feedwrap&quot;&gt;
+      &lt;div class=&quot;sectionhead&quot;&gt;
+        &lt;h2&gt;Price drops and new listings&lt;/h2&gt;
+        &lt;button class=&quot;ghost&quot;&gt;Clear&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;feed&quot;&gt;
+        &lt;a class=&quot;ev&quot;&gt;
+          &lt;div class=&quot;l1&quot;&gt;&lt;span class=&quot;badge drop&quot;&gt;Down $19.99&lt;/span&gt;&lt;span class=&quot;item&quot;&gt;9950X3D&lt;/span&gt;&lt;span class=&quot;price&quot; style=&quot;color: #e89070&quot;&gt;$929.98&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;t&quot;&gt;Amazon.ca · AMD Ryzen 9 9950X3D 16-Core&lt;/div&gt;
+          &lt;div class=&quot;when&quot;&gt;2 min ago · was $949.99&lt;/div&gt;
+        &lt;/a&gt;
+        &lt;a class=&quot;ev&quot;&gt;
+          &lt;div class=&quot;l1&quot;&gt;&lt;span class=&quot;badge new&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;item&quot;&gt;RTX 5090&lt;/span&gt;&lt;span class=&quot;price&quot; style=&quot;color: #e89070&quot;&gt;$7,200.00&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;t&quot;&gt;Facebook Marketplace · Zotac RTX 5090&lt;/div&gt;
+          &lt;div class=&quot;when&quot;&gt;14 min ago · Vancouver, BC&lt;/div&gt;
+        &lt;/a&gt;
+        &lt;a class=&quot;ev&quot;&gt;
+          &lt;div class=&quot;l1&quot;&gt;&lt;span class=&quot;badge new&quot;&gt;Back in stock&lt;/span&gt;&lt;span class=&quot;item&quot;&gt;9800X3D&lt;/span&gt;&lt;span class=&quot;price&quot; style=&quot;color: #e89070&quot;&gt;$569.98&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;t&quot;&gt;Amazon.ca · AMD Ryzen 7 9800X3D 8-Core&lt;/div&gt;
+          &lt;div class=&quot;when&quot;&gt;38 min ago&lt;/div&gt;
+        &lt;/a&gt;
+        &lt;a class=&quot;ev&quot;&gt;
+          &lt;div class=&quot;l1&quot;&gt;&lt;span class=&quot;badge drop&quot;&gt;Down $101.51&lt;/span&gt;&lt;span class=&quot;item&quot;&gt;9950X3D&lt;/span&gt;&lt;span class=&quot;price&quot; style=&quot;color: #e89070&quot;&gt;$801.78&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;t&quot;&gt;Amazon.ca · Used, Amazon Resale&lt;/div&gt;
+          &lt;div class=&quot;when&quot;&gt;1 h ago · was $903.29&lt;/div&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;grid&quot;&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;RTX 5090&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;RTX 5090&quot; · 19 listings · checked 2 min ago · target $7,100.00&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot; style=&quot;color: #e89070&quot;&gt;$7,200.00&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;Facebook Marketplace · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,200.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;Brand new in box Zotac RTX 5090&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used / local · Vancouver, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,300.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;ASUS 5090 RTX GPU&lt;span class=&quot;meta&quot;&gt;Used / local · West Vancouver, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,488.02&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;GIGABYTE AORUS GeForce RTX 5090 Master 32G&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src canadacomputers&quot;&gt;Canada Comp.&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,899.00&lt;small&gt;list $8,199.00&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;GIGABYTE GeForce RTX 5090 WINDFORCE OC&lt;span class=&quot;meta&quot;&gt;New · Online · Available to Ship&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$8,789.22&lt;small class=&quot;up&quot;&gt;up from $8,370.69&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;ASUS TUF Gaming GeForce RTX 5090 32GB&lt;span class=&quot;tag used&quot;&gt;used&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used or new, cheapest of 2 offers&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (19)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;9950X3D&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;9950X3D&quot; · 61 listings · checked 2 min ago&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot; style=&quot;color: #e89070&quot;&gt;$800.00&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;eBay.ca · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src ebay&quot;&gt;eBay.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$800.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 9 9950X3D Granite Ridge&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Brand New · Free local pickup&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$801.78&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 9 9950X3D 16-Core Processor&lt;span class=&quot;tag used&quot;&gt;used&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used, Amazon Resale&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src canadacomputers&quot;&gt;Canada Comp.&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$883.48&lt;small&gt;list $949.05&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 9 9950X3D 16-Core/32Thread CPU&lt;span class=&quot;meta&quot;&gt;Open Box · Available for Pickup&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow dropped&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$929.98&lt;small class=&quot;down&quot;&gt;down from $949.99&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 9 9950X3D 16-Core Processor&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src bestbuy_ca&quot;&gt;Best Buy&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$929.98&lt;small&gt;list $959.98&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 9 9950X3D 16-Core AM5 Processor&lt;span class=&quot;meta&quot;&gt;New · Best Buy&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (61)&lt;/button&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show hidden (2)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;9800X3D&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;9800x3d&quot; · 8 listings · checked 3 min ago · target $520.00&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot; style=&quot;color: #e89070&quot;&gt;$550.00&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;Facebook Marketplace · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$550.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;Ryzen 7 9800X3D&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used / local · Nanaimo, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$560.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D 8-Core, brand new&lt;span class=&quot;meta&quot;&gt;Used / local · Coquitlam, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$569.98&lt;small&gt;list $619.98&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D 8-Core, 16-Thread&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src ebay&quot;&gt;eBay.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$589.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D Desktop Processor&lt;span class=&quot;meta&quot;&gt;Brand New · United States&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src bestbuy_ca&quot;&gt;Best Buy&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$599.99&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D 8-Core AM5 Processor&lt;span class=&quot;meta&quot;&gt;New · Best Buy&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (8)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;RTX 5080&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;RTX 5080&quot; · 30 listings · checked 4 min ago&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot; style=&quot;color: #e89070&quot;&gt;$1,849.99&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;Newegg.ca · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src newegg&quot;&gt;Newegg.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$1,849.99&lt;small class=&quot;down&quot;&gt;down from $1,949.99&lt;/small&gt;&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;MSI GeForce RTX 5080 16G Ventus 3X OC&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$1,899.97&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;GIGABYTE GeForce RTX 5080 Gaming OC 16G&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src bestbuy_ca&quot;&gt;Best Buy&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$1,929.99&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;ASUS PRIME GeForce RTX 5080 16GB&lt;span class=&quot;meta&quot;&gt;New · Best Buy&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$1,950.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;RTX 5080 Founders, barely used&lt;span class=&quot;meta&quot;&gt;Used / local · Burnaby, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src ebay&quot;&gt;eBay.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$2,014.50&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;ZOTAC GAMING GeForce RTX 5080 Solid OC&lt;span class=&quot;meta&quot;&gt;Brand New · United States&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (30)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;div class=&quot;foot&quot;&gt;
+    &lt;span&gt;Runs on this computer. Only in-stock listings are shown.&lt;/span&gt;
+    &lt;a&gt;Privacy&lt;/a&gt;
+    &lt;a&gt;Terms&lt;/a&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></section><section class="board"><div class="cap"><span class="name">Edit item dialog</span><span class="dim">860 x 970  ·  EditItem.dc.html</span></div><iframe style="width:860px;height:970px" srcdoc="&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap&quot;&gt;
+  &lt;style&gt;
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070; --green: #9ab37a;
+      --fs: 14px; --fs-head: 16px;
+      --ui: &quot;Poppins&quot;, Arial, Helvetica, sans-serif;
+      --prose: &quot;Lora&quot;, Georgia, &quot;Times New Roman&quot;, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    label { display: block; color: var(--muted); margin: 12px 0; }
+    label input { margin-top: 5px; }
+    label.inline { display: flex; align-items: center; gap: 9px; color: var(--text); margin: 0; }
+    label.inline input { width: auto; margin: 0; accent-color: #d97757; }
+    label.inline.off { color: var(--faint); }
+    h3 { margin: 0 0 14px; font-size: var(--fs-head); font-weight: 600; letter-spacing: -0.01em; }
+    fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 14px 0 0; padding: 12px 14px; }
+    legend { color: var(--muted); padding: 0 6px; }
+    .toggles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+    .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .hint { color: var(--muted); margin: 8px 0 0; font-family: var(--prose); line-height: 1.55; }
+    .quick { display: flex; gap: 8px; margin: 12px 0 0; }
+    .dlgactions { display: flex; gap: 8px; margin-top: 18px; align-items: center; }
+    .dlgactions .spacer { flex: 1; }
+    .dlg { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; width: 760px; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .backdrop { background: rgba(0,0,0,.55); padding: 56px 50px; display: flex; justify-content: center; }
+  &lt;/style&gt;
+
+
+&lt;div style=&quot;background: #141413&quot;&gt;
+  &lt;div class=&quot;backdrop&quot;&gt;
+    &lt;div class=&quot;dlg&quot;&gt;
+      &lt;h3&gt;Edit item&lt;/h3&gt;
+
+      &lt;label&gt;Name
+        &lt;input value=&quot;RTX 5090&quot;&gt;
+      &lt;/label&gt;
+      &lt;label&gt;Search query
+        &lt;input value=&quot;RTX 5090&quot;&gt;
+      &lt;/label&gt;
+      &lt;label&gt;Must contain (comma separated)
+        &lt;input value=&quot;rtx, 5090&quot;&gt;
+      &lt;/label&gt;
+      &lt;label&gt;Exclude (comma separated)
+        &lt;input value=&quot;gaming pc, laptop, prebuilt, bundle, combo, no gpu, water block&quot;&gt;
+      &lt;/label&gt;
+
+      &lt;div class=&quot;row3&quot;&gt;
+        &lt;label&gt;Min price
+          &lt;input value=&quot;&quot;&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Max price
+          &lt;input value=&quot;&quot;&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Target price
+          &lt;input value=&quot;7100&quot;&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;hint&quot;&gt;Target price: always notify when any listing is at or below it. Max price: ignore listings above it, which kills prebuilts.&lt;/p&gt;
+
+      &lt;fieldset&gt;
+        &lt;legend&gt;Stores to check for this item&lt;/legend&gt;
+        &lt;p class=&quot;hint&quot; style=&quot;margin: 0 0 14px&quot;&gt;Settings decides which stores the app uses at all; this list only narrows it for this item. A store must be on in both places to be checked.&lt;/p&gt;
+        &lt;div class=&quot;toggles&quot;&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Amazon.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Newegg.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Best Buy Canada&lt;/label&gt;
+          &lt;label class=&quot;inline off&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; Canada Computers, off in Settings&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; eBay.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Facebook Marketplace&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;quick&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Amazon only&lt;/button&gt;
+          &lt;button class=&quot;ghost&quot;&gt;All stores&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/fieldset&gt;
+
+      &lt;div class=&quot;dlgactions&quot;&gt;
+        &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+        &lt;button class=&quot;ghost&quot;&gt;Cancel&lt;/button&gt;
+        &lt;button class=&quot;primary&quot;&gt;Save&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></section><section class="board"><div class="cap"><span class="name">Settings dialog</span><span class="dim">860 x 1440  ·  Settings.dc.html</span></div><iframe style="width:860px;height:1440px" srcdoc="&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap&quot;&gt;
+  &lt;style&gt;
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070; --green: #9ab37a;
+      --fs: 14px; --fs-head: 16px;
+      --ui: &quot;Poppins&quot;, Arial, Helvetica, sans-serif;
+      --prose: &quot;Lora&quot;, Georgia, &quot;Times New Roman&quot;, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    input, select { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+    label { display: block; color: var(--muted); margin: 12px 0; }
+    label input, label select { margin-top: 5px; }
+    label.inline { display: flex; align-items: center; gap: 9px; color: var(--text); margin: 0; }
+    label.inline input { width: auto; margin: 0; accent-color: #d97757; }
+    label.inline.channel { margin-top: 18px; font-weight: 600; }
+    h3 { margin: 0 0 14px; font-size: var(--fs-head); font-weight: 600; letter-spacing: -0.01em; }
+    fieldset { border: 1px solid var(--line); border-radius: 8px; margin: 14px 0 0; padding: 12px 14px; }
+    legend { color: var(--muted); padding: 0 6px; }
+    .toggles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+    .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .hint { color: var(--muted); margin: 8px 0 0; font-family: var(--prose); line-height: 1.55; }
+    .quick { display: flex; gap: 8px; margin: 12px 0 0; }
+    .teststatus { margin: 12px 0 0; font-family: var(--prose); }
+    .teststatus.good { color: var(--green); }
+    .dlgactions { display: flex; gap: 8px; margin-top: 18px; align-items: center; }
+    .dlgactions .spacer { flex: 1; }
+    .log { margin-top: 18px; color: var(--muted); }
+    .dlg { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; width: 760px; box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+    .backdrop { background: rgba(0,0,0,.55); padding: 50px; display: flex; justify-content: center; }
+  &lt;/style&gt;
+
+
+&lt;div style=&quot;background: #141413&quot;&gt;
+  &lt;div class=&quot;backdrop&quot;&gt;
+    &lt;div class=&quot;dlg&quot;&gt;
+      &lt;h3&gt;Settings&lt;/h3&gt;
+
+      &lt;div class=&quot;row3&quot;&gt;
+        &lt;label&gt;Region
+          &lt;select&gt;&lt;option&gt;Canada&lt;/option&gt;&lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Check every (minutes)
+          &lt;input value=&quot;15&quot;&gt;
+        &lt;/label&gt;
+        &lt;label&gt;Facebook city slug
+          &lt;input value=&quot;vancouver&quot;&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+
+      &lt;fieldset&gt;
+        &lt;legend&gt;Stores&lt;/legend&gt;
+        &lt;div class=&quot;toggles&quot;&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Amazon.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Newegg.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Best Buy Canada&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Canada Computers&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; eBay.ca&lt;/label&gt;
+          &lt;label class=&quot;inline&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Facebook Marketplace&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;quick&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Amazon only&lt;/button&gt;
+          &lt;button class=&quot;ghost&quot;&gt;All stores&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;label class=&quot;inline channel&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Include used and open-box offers&lt;/label&gt;
+        &lt;p class=&quot;hint&quot;&gt;Amazon also sells used and open-box stock through Amazon Resale, often well under the new price. The cheapest such offer for a product appears as its own row, marked &quot;used&quot;.&lt;/p&gt;
+      &lt;/fieldset&gt;
+
+      &lt;fieldset&gt;
+        &lt;legend&gt;Alerts&lt;/legend&gt;
+        &lt;p class=&quot;hint&quot; style=&quot;margin: 0 0 6px&quot;&gt;An alert goes out when a listing beats an item&#x27;s best price, drops to within 5% of it, or reaches the item&#x27;s target price. At most three per store per check, on every channel below.&lt;/p&gt;
+
+        &lt;label class=&quot;inline channel&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Windows notifications on this PC&lt;/label&gt;
+        &lt;div class=&quot;quick&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Test Windows notification&lt;/button&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Enable browser alerts&lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;label class=&quot;inline channel&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; Email&lt;/label&gt;
+        &lt;div class=&quot;row3&quot;&gt;
+          &lt;label&gt;Send to
+            &lt;input value=&quot;&quot; placeholder=&quot;you@example.com&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;SMTP host
+            &lt;input value=&quot;smtp.gmail.com&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;Port
+            &lt;input value=&quot;587&quot;&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;row3&quot;&gt;
+          &lt;label&gt;SMTP username
+            &lt;input value=&quot;&quot; placeholder=&quot;you@gmail.com&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;SMTP password
+            &lt;input value=&quot;&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;Security
+            &lt;select&gt;&lt;option&gt;STARTTLS (port 587)&lt;/option&gt;&lt;/select&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;hint&quot;&gt;Sending email needs an account to send from. For Gmail the password must be a 16-character app password, not your normal password.&lt;/p&gt;
+        &lt;div class=&quot;quick&quot;&gt;&lt;button class=&quot;ghost&quot;&gt;Send test email&lt;/button&gt;&lt;/div&gt;
+
+        &lt;label class=&quot;inline channel&quot;&gt;&lt;input type=&quot;checkbox&quot; checked&gt; Phone push through the ntfy app&lt;/label&gt;
+        &lt;div class=&quot;row3&quot;&gt;
+          &lt;label&gt;Topic
+            &lt;input value=&quot;item-hunter-x7k2p9&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;Server
+            &lt;input value=&quot;https://ntfy.sh&quot;&gt;
+          &lt;/label&gt;
+          &lt;label&gt;&amp;nbsp;
+            &lt;span class=&quot;quick&quot; style=&quot;margin-top: 5px&quot;&gt;&lt;button class=&quot;ghost&quot;&gt;Generate topic&lt;/button&gt;&lt;/span&gt;
+          &lt;/label&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;hint&quot;&gt;Install the free ntfy app, subscribe to the same topic, and alerts arrive as push notifications. Anyone who knows the topic name can read it, so use a random one.&lt;/p&gt;
+        &lt;div class=&quot;quick&quot;&gt;&lt;button class=&quot;ghost&quot;&gt;Send test push&lt;/button&gt;&lt;/div&gt;
+        &lt;div class=&quot;teststatus good&quot;&gt;Sent to topic item-hunter-x7k2p9. It should be on your phone now; then press Save.&lt;/div&gt;
+      &lt;/fieldset&gt;
+
+      &lt;div class=&quot;dlgactions&quot;&gt;
+        &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+        &lt;button class=&quot;ghost&quot;&gt;Cancel&lt;/button&gt;
+        &lt;button class=&quot;primary&quot;&gt;Save&lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;log&quot;&gt;Activity log&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></section><section class="board"><div class="cap"><span class="name">Empty state</span><span class="dim">1440 x 640  ·  EmptyState.dc.html</span></div><iframe style="width:1440px;height:640px" srcdoc="&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap&quot;&gt;
+  &lt;style&gt;
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070;
+      --fs: 14px; --fs-head: 16px;
+      --ui: &quot;Poppins&quot;, Arial, Helvetica, sans-serif;
+      --prose: &quot;Lora&quot;, Georgia, &quot;Times New Roman&quot;, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+
+    .top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .brand { font-weight: 600; font-size: var(--fs-head); display: flex; align-items: center; gap: 9px; white-space: nowrap; letter-spacing: -0.01em; }
+    .brand .logo { flex: none; color: var(--accent); }
+    .status { color: var(--muted); flex: 1; }
+    .actions { display: flex; gap: 8px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 18px 20px 40px; }
+    .addbar { display: flex; gap: 10px; margin-bottom: 18px; }
+    .addbar button { white-space: nowrap; padding: 0 20px; }
+
+    .empty { text-align: center; color: var(--muted); padding: 96px 20px; font-family: var(--prose); line-height: 1.6; }
+    .empty .big { font-size: var(--fs-head); color: var(--text); margin-bottom: 10px; font-family: var(--ui); font-weight: 600; letter-spacing: -0.01em; }
+    .empty .sub { max-width: 540px; margin: 0 auto; }
+    .foot { max-width: 1400px; margin: 0 auto; padding: 0 20px 28px; color: var(--muted); display: flex; gap: 18px; font-family: var(--prose); }
+    .foot a { text-decoration: underline; }
+  &lt;/style&gt;
+
+
+&lt;div style=&quot;background: #141413; min-height: 640px; display: flex; flex-direction: column&quot;&gt;
+
+  &lt;div class=&quot;top&quot;&gt;
+    &lt;div class=&quot;brand&quot;&gt;
+      &lt;svg class=&quot;logo&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;2&quot; fill=&quot;currentColor&quot;&gt;&lt;/circle&gt;&lt;path d=&quot;M10 1v4M10 15v4M1 10h4M15 10h4&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+      Item Hunter
+    &lt;/div&gt;
+    &lt;div class=&quot;status&quot;&gt;No check yet · every 15 min · via msedge&lt;/div&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;button class=&quot;primary&quot;&gt;Check all now&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot;&gt;Settings&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;main style=&quot;flex: 1&quot;&gt;
+    &lt;div class=&quot;addbar&quot;&gt;
+      &lt;input value=&quot;&quot; placeholder=&quot;Part to hunt, for example 9950X3D, RTX 5080, 9800X3D&quot;&gt;
+      &lt;button class=&quot;primary&quot;&gt;Hunt it&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;empty&quot;&gt;
+      &lt;div class=&quot;big&quot;&gt;Nothing being hunted yet.&lt;/div&gt;
+      &lt;div class=&quot;sub&quot;&gt;Type a part above. Each one gets a card here with the cheapest in-stock listing from every store, and drops land in the feed.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;div class=&quot;foot&quot;&gt;
+    &lt;span&gt;Runs on this computer. Only in-stock listings are shown.&lt;/span&gt;
+    &lt;a&gt;Privacy&lt;/a&gt;
+    &lt;a&gt;Terms&lt;/a&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></section><section class="board"><div class="cap"><span class="name">Blocked store and no-match states</span><span class="dim">1440 x 1000  ·  BlockedStore.dc.html</span></div><iframe style="width:1440px;height:1000px" srcdoc="&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  
+&lt;/head&gt;
+&lt;body&gt;
+
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Lora:wght@400;500&amp;display=swap&quot;&gt;
+  &lt;style&gt;
+    :root {
+      --bg: #141413; --panel: #1d1d1b; --panel2: #262523; --line: #33322e;
+      --text: #faf9f5; --muted: #b0aea5; --faint: #7c7a72;
+      --accent: #d97757; --accent-bright: #e89070;
+      --green: #9ab37a; --blue: #8fb8dd; --red: #e2705a;
+      --radius: 12px;
+      --fs: 14px; --fs-head: 16px; --fs-price: 24px;
+      --ui: &quot;Poppins&quot;, Arial, Helvetica, sans-serif;
+      --prose: &quot;Lora&quot;, Georgia, &quot;Times New Roman&quot;, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 400 var(--fs)/1.5 var(--ui); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--accent-bright); }
+    button { font: 500 var(--fs)/1.4 var(--ui); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #1a1008; font-weight: 600; }
+    button.ghost { background: transparent; }
+    button.quiet { background: transparent; border-color: transparent; color: var(--muted); padding: 5px 9px; }
+    input { font: 400 var(--fs)/1.5 var(--ui); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; width: 100%; }
+    input::placeholder { color: var(--faint); }
+
+    .top { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .brand { font-weight: 600; font-size: var(--fs-head); display: flex; align-items: center; gap: 9px; white-space: nowrap; letter-spacing: -0.01em; }
+    .brand .logo { flex: none; color: var(--accent); }
+    .status { color: var(--accent-bright); flex: 1; }
+    .actions { display: flex; gap: 8px; }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 18px 20px 40px; }
+    .addbar { display: flex; gap: 10px; margin-bottom: 18px; }
+    .addbar button { white-space: nowrap; padding: 0 20px; }
+
+    .errors { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .errors .chip { background: #2e1f1a; border: 1px solid #5c3a2e; color: #e8a894; border-radius: 6px; padding: 7px 12px; font-family: var(--prose); }
+
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; }
+    .card.paused { opacity: .55; }
+    .card .head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; gap: 12px; }
+    .card .head .name { font-weight: 600; font-size: var(--fs-head); letter-spacing: -0.01em; }
+    .card .head .sub { color: var(--muted); margin-top: 3px; font-family: var(--prose); }
+    .card .best { margin-left: auto; text-align: right; white-space: nowrap; }
+    .card .best .p { font-size: var(--fs-price); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; color: #e89070; }
+    .card .best .p.none { color: var(--faint); font-size: var(--fs-head); }
+    .card .best .s { color: var(--muted); }
+    .card .tools { display: flex; gap: 4px; padding: 8px 10px 0; justify-content: flex-end; }
+    .rows { padding: 8px 10px 6px; display: flex; flex-direction: column; gap: 5px; }
+    .lrow { display: grid; grid-template-columns: 128px 150px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 7px 10px; border-radius: 8px; border: 1px solid transparent; }
+    .lrow.best { border-color: rgba(217,119,87,.5); background: rgba(217,119,87,.10); }
+    .src { font-weight: 500; padding: 3px 8px; border-radius: 6px; background: var(--panel2); border: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+    .src.amazon { color: #e0a468; } .src.ebay { color: #8fb8dd; } .src.facebook { color: #8fa8dd; }
+    .lrow .pr { font-weight: 600; white-space: nowrap; }
+    .lrow .ttl { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lrow .meta { color: var(--muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--prose); }
+    .tag { border-radius: 5px; padding: 1px 7px; margin-left: 8px; border: 1px solid var(--line); color: var(--muted); }
+    .tag.low { color: var(--green); border-color: rgba(154,179,122,.45); }
+    .nothing { padding: 44px 20px; color: var(--muted); text-align: center; font-family: var(--prose); line-height: 1.6; }
+    .more { padding: 4px 12px 12px; display: flex; gap: 10px; }
+  &lt;/style&gt;
+
+
+&lt;div style=&quot;background: #141413; min-height: 1000px&quot;&gt;
+
+  &lt;div class=&quot;top&quot;&gt;
+    &lt;div class=&quot;brand&quot;&gt;
+      &lt;svg class=&quot;logo&quot; width=&quot;20&quot; height=&quot;20&quot; viewBox=&quot;0 0 20 20&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;7&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/circle&gt;&lt;circle cx=&quot;10&quot; cy=&quot;10&quot; r=&quot;2&quot; fill=&quot;currentColor&quot;&gt;&lt;/circle&gt;&lt;path d=&quot;M10 1v4M10 15v4M1 10h4M15 10h4&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;&lt;/path&gt;&lt;/svg&gt;
+      Item Hunter
+    &lt;/div&gt;
+    &lt;div class=&quot;status&quot;&gt;Checking RTX 5090 at Newegg.ca (waiting 9 s so the store is not hammered)&lt;/div&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;button class=&quot;primary&quot;&gt;Check all now&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot;&gt;Settings&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;main&gt;
+    &lt;div class=&quot;addbar&quot;&gt;
+      &lt;input value=&quot;&quot; placeholder=&quot;Part to hunt, for example 9950X3D, RTX 5080, 9800X3D&quot;&gt;
+      &lt;button class=&quot;primary&quot;&gt;Hunt it&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;errors&quot;&gt;
+      &lt;span class=&quot;chip&quot;&gt;Canada Computers: blocked (Access denied). Leaving this store alone until 16:53&lt;/span&gt;
+      &lt;span class=&quot;chip&quot;&gt;eBay.ca: blocked (page title: &quot;Error Page | eBay&quot;). Leaving this store alone until 16:53&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;grid&quot;&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;RTX 5090&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;RTX 5090&quot; · 11 listings · checked just now · target $7,100.00&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot;&gt;$7,200.00&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;Facebook Marketplace · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,200.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;Brand new in box Zotac RTX 5090&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used / local · Vancouver, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,488.02&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;GIGABYTE AORUS GeForce RTX 5090 Master 32G&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$7,989.97&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;GIGABYTE AORUS RTX 5090 AI Box Graphics Card&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (11)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;card&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;RTX 5070 Ti&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;RTX 5070Ti&quot; · 0 listings · checked just now&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p none&quot;&gt;No price&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;no in-stock match yet&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Pause&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;nothing&quot;&gt;No in-stock listing matches yet.&lt;br&gt;Loosen the filters under Edit if that seems wrong.&lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;card paused&quot;&gt;
+        &lt;div class=&quot;head&quot;&gt;
+          &lt;div&gt;
+            &lt;div class=&quot;name&quot;&gt;9800X3D&lt;/div&gt;
+            &lt;div class=&quot;sub&quot;&gt;&quot;9800x3d&quot; · 8 listings · checked 2 h ago · paused&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;best&quot;&gt;
+            &lt;div class=&quot;p&quot;&gt;$550.00&lt;/div&gt;
+            &lt;div class=&quot;s&quot;&gt;Facebook Marketplace · CAD&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;tools&quot;&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Check now&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Edit&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Resume&lt;/button&gt;
+          &lt;button class=&quot;quiet&quot;&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;rows&quot;&gt;
+          &lt;div class=&quot;lrow best&quot;&gt;
+            &lt;span class=&quot;src facebook&quot;&gt;Facebook&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$550.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;Ryzen 7 9800X3D&lt;span class=&quot;tag low&quot;&gt;best&lt;/span&gt;&lt;span class=&quot;meta&quot;&gt;Used / local · Nanaimo, BC&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src amazon&quot;&gt;Amazon.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$569.98&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D 8-Core, 16-Thread&lt;span class=&quot;meta&quot;&gt;New&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;lrow&quot;&gt;
+            &lt;span class=&quot;src ebay&quot;&gt;eBay.ca&lt;/span&gt;
+            &lt;span class=&quot;pr&quot;&gt;$589.00&lt;/span&gt;
+            &lt;span class=&quot;ttl&quot;&gt;AMD Ryzen 7 9800X3D Desktop Processor&lt;span class=&quot;meta&quot;&gt;Brand New · United States&lt;/span&gt;&lt;/span&gt;
+            &lt;button class=&quot;quiet&quot;&gt;Hide&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;more&quot;&gt;
+          &lt;button class=&quot;ghost&quot;&gt;Show all (8)&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe></section>
+</body></html>
